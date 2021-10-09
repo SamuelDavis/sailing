@@ -14,10 +14,11 @@ export function angle(x: number, y: number, ox: number, oy: number): number {
   let theta = Math.atan2(dy, dx);
 
   theta = radiansToDegrees(theta);
-  /* TODO: fix this terrible nonsense */
+  // /* TODO: fix this terrible nonsense */
   theta += 90; // css rotations treat up as origin
-  if (theta > 180) theta -= 360; // make range [-180, 180] not [-90, 270]
-  if (theta < 0) theta += 360; // compensate for negatives
+  theta = (theta + 360) % 360; // always positive
+  // if (theta > 180) theta -= 360; // make range [-180, 180] not [-90, 270]
+  // if (theta < 0) theta += 360; // compensate for negatives
 
   return theta;
 }

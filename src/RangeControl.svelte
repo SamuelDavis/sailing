@@ -9,12 +9,14 @@
   export let vector: Writable<Vector>;
 </script>
 
-<label for={id}>{label}</label>
-<input
-  {id}
-  type="range"
-  step="0.01"
-  min={-ROTATION_LIMIT / 2}
-  max={ROTATION_LIMIT / 2}
-  bind:value={$vector.direction}
-/>
+<div {...$$restProps}>
+  <label for={id}>{label} ({$vector.direction.toFixed(2)}&deg;)</label>
+  <input
+    {id}
+    type="range"
+    step="0.01"
+    min={0}
+    max={ROTATION_LIMIT}
+    bind:value={$vector.direction}
+  />
+</div>
