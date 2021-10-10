@@ -12,8 +12,8 @@
     <form on:submit|preventDefault>
       <StackingContainer class="container">
         <DialControl class="wind" vector={wind} />
-        <DialControl class="water" vector={water} scale={0.8} />
-        <DialControl class="rudder" vector={rudder} scale={0.6} />
+        <DialControl class="water" vector={water} scale={0.7} />
+        <DialControl class="rudder" vector={rudder} scale={0.4} />
         <Needle class="ship" vector={ship} />
       </StackingContainer>
       <table>
@@ -42,7 +42,7 @@
 
 <style lang="css">
   :root {
-    --size: 20vw;
+    --size: 25vw;
   }
 
   * :global(.container) {
