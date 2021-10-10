@@ -1,9 +1,9 @@
 <script lang="ts">
-  import RangeControl from "./RangeControl.svelte";
-  import { rudder, ship, water, wind } from "./store";
-  import SvgControl from "./SVGControl.svelte";
+  import DialControl from "./DialControl.svelte";
 
-  import { ROTATION_LIMIT } from "./Util";
+  import RangeControl from "./RangeControl.svelte";
+  import StackingContainer from "./StackingContainer.svelte";
+  import { rudder, ship, water, wind } from "./store";
 
   let svg: SVGSVGElement;
 </script>
@@ -16,26 +16,13 @@
       <RangeControl class="water" id="water" label="Water" vector={water} />
       <RangeControl class="rudder" id="rudder" label="Rudder" vector={rudder} />
     </form>
-    <svg
-      bind:this={svg}
-      width="120"
-      height="120"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <SvgControl class="wind" vector={wind} radius={60} length={0} />
-      <SvgControl class="water" vector={water} radius={40} length={20} />
-      <SvgControl class="rudder" vector={rudder} radius={20} length={40} />
-      <line
-        class="ship"
-        x1="50%"
-        y1="50%"
-        x2="50%"
-        y2="0"
-        stroke-linecap="round"
-        transform={`rotate(${$ship.direction})`}
-      />
-    </svg>
+
+    <StackingContainer class="container">
+      <DialControl class="wind" vector={wind} />
+      <DialControl class="water" vector={water} scale={0.75} />
+      <DialControl class="rudder" vector={rudder} scale={0.5} />
+      <span class="ship" style={`--direction:${$ship.direction}deg;`} />
+    </StackingContainer>
   </section>
 
   <section>
@@ -62,3 +49,29 @@
 
   <section style="height: 1000px;">hello</section>
 </main>
+
+<style lang="css">
+  :root {
+    --size: 20vw;
+  }
+  * :global(.container) {
+    width: var(--size);
+    height: var(--size);
+    background-color: gray;
+    border-radius: 50%;
+  }
+
+  .ship {
+    --thickness: 0.5em;
+
+    background-color: gold;
+    position: absolute;
+    width: 50%;
+    height: var(--thickness);
+    top: calc(50% - var(--thickness) / 2);
+    margin-left: 50%;
+    border-radius: 25px;
+    transform: rotate(calc(var(--direction) - 90deg));
+    transform-origin: center left;
+  }
+</style>
