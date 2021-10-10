@@ -1,25 +1,23 @@
-export const ROTATION_LIMIT = 360;
+import { Vector } from "./Vector";
 
-export function sum(...numbers: number[]): number {
-  return numbers.reduce((sum, operand) => sum + operand, 0);
+export const ROTATION_LIMIT = Math.PI;
+
+export function components(vector: Vector): [number, number] {
+  return [
+    Math.cos(vector.direction) * vector.magnitude,
+    Math.sin(vector.direction) * vector.magnitude,
+  ];
 }
 
-export function average(...numbers: number[]): number {
-  return sum(...numbers) / numbers.length;
-}
+export function addVectors(...vectors: Vector[]): Vector {
+  let x = 0;
+  let y = 0;
+  for (const vector of vectors) {
+    const [vx, vy] = components(vector);
+    x += vx;
+    y += vy;
+  }
+  const m = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
-export function angle(x: number, y: number, ox: number, oy: number): number {
-  const dx = x - ox;
-  const dy = y - oy;
-  let theta = Math.atan2(dy, dx);
-
-  theta = radiansToDegrees(theta);
-  theta += 90; // css rotations treat up as origin
-  theta = (theta + 360) % 360; // always positive
-
-  return theta;
-}
-
-function radiansToDegrees(radians: number): number {
-  return (radians * 180) / Math.PI;
+  return new Vector(Math.atan2(y, x), m);
 }

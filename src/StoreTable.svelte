@@ -14,7 +14,7 @@
     {#each Object.entries( { wind: $wind, water: $water, rudder: $rudder, ship: $ship } ) as [index, vector]}
       <tr class={index}>
         <td>{index}</td>
-        <td>{vector.direction.toFixed(2)}&deg;</td>
+        <td>{vector.direction.toFixed(2)}<sup>rad</sup></td>
         <td>{vector.magnitude.toFixed(2)}</td>
       </tr>
     {/each}

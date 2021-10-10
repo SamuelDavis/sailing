@@ -10,12 +10,12 @@
 </script>
 
 <div {...$$restProps}>
-  <label for={id}>{label} ({$vector.direction.toFixed(2)}&deg;)</label>
+  <label for={id}>{label} ({$vector.direction.toFixed(2)}<sup>rad</sup>)</label>
   <input
     {id}
     type="range"
     step="0.01"
-    min={0}
+    min={-ROTATION_LIMIT}
     max={ROTATION_LIMIT}
     bind:value={$vector.direction}
   />

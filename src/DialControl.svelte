@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Writable } from "svelte/store";
   import Needle from "./Needle.svelte";
-  import { angle } from "./Util";
 
   import type { Vector } from "./Vector";
 
@@ -11,17 +10,14 @@
   let focus: boolean = false;
   let el: HTMLDivElement;
 
-  function onDeriveAngle(event: MouseEvent & { currentTarget: Window }) {
+  function onDeriveAngle(event: MouseEvent) {
     if (event.buttons !== 1) focus = false;
     if (!focus) return;
 
     const rect = el.getBoundingClientRect();
-    $vector.direction = angle(
-      event.clientX,
-      event.clientY,
-      rect.left + rect.width / 2,
-      rect.top + rect.height / 2
-    );
+    const x = event.clientX - rect.x - rect.width / 2;
+    const y = -(event.clientY - rect.y - rect.height / 2); // browser treats top as 0
+    $vector.direction = Math.atan2(y, x);
   }
 
   function onFocus(value: boolean) {

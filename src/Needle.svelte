@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { Readable } from "svelte/store";
-
   import type { Vector } from "./Vector";
 
   export let vector: Readable<Vector>;
 </script>
 
-<hr style={`--direction:${$vector.direction}deg`} {...$$restProps} />
+<hr style={`--direction:${$vector.direction}rad`} {...$$restProps} />
 
 <style lang="css">
   :root {
@@ -20,7 +19,8 @@
     border: var(--border-width) solid;
     border-radius: 25px;
 
-    transform: rotate(calc(var(--direction) - 90deg));
+    /* CSS rotation is reversed */
+    transform: rotate(calc(var(--direction) * -1));
     transform-origin: center left;
   }
 </style>
