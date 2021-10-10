@@ -1,5 +1,6 @@
 <script lang="ts">
   import DialControl from "./DialControl.svelte";
+  import Needle from "./Needle.svelte";
 
   import RangeControl from "./RangeControl.svelte";
   import StackingContainer from "./StackingContainer.svelte";
@@ -19,9 +20,9 @@
 
     <StackingContainer class="container">
       <DialControl class="wind" vector={wind} />
-      <DialControl class="water" vector={water} scale={0.75} />
-      <DialControl class="rudder" vector={rudder} scale={0.5} />
-      <span class="ship dial" style={`--direction:${$ship.direction}deg;`} />
+      <DialControl class="water" vector={water} scale={0.8} />
+      <DialControl class="rudder" vector={rudder} scale={0.6} />
+      <Needle vector={ship} />
     </StackingContainer>
   </section>
 
@@ -61,16 +62,7 @@
     border-radius: 50%;
   }
 
-  .ship.dial {
-    --thickness: 0.5em;
-
+  * :global(.container > *) {
     position: absolute;
-    width: 50%;
-    height: var(--thickness);
-    top: calc(50% - var(--thickness) / 2);
-    margin-left: 50%;
-    border-radius: 25px;
-    transform: rotate(calc(var(--direction) - 90deg));
-    transform-origin: center left;
   }
 </style>

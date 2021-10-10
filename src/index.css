@@ -2,6 +2,7 @@
   --wind: lightskyblue;
   --water: royalblue;
   --rudder: burlywood;
+  --ship: palegoldenrod;
 }
 
 * {
@@ -40,20 +41,8 @@ td {
   border: 1px solid black;
 }
 
-svg * {
-  transform-origin: 50% 50%;
-}
-
-line {
-  stroke: whitesmoke;
-  stroke-width: 3px;
-}
-line.ship {
-  stroke: darkgoldenrod;
-}
-
 .ship {
-  background-color: palegoldenrod;
+  background-color: var(--ship);
 }
 .wind {
   background-color: var(--wind);
