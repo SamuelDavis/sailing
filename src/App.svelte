@@ -21,7 +21,7 @@
       <DialControl class="wind" vector={wind} />
       <DialControl class="water" vector={water} scale={0.75} />
       <DialControl class="rudder" vector={rudder} scale={0.5} />
-      <span class="ship" style={`--direction:${$ship.direction}deg;`} />
+      <span class="ship dial" style={`--direction:${$ship.direction}deg;`} />
     </StackingContainer>
   </section>
 
@@ -37,7 +37,7 @@
       </thead>
       <tbody>
         {#each Object.entries( { wind: $wind, water: $water, rudder: $rudder, ship: $ship } ) as [index, vector]}
-          <tr>
+          <tr class={index}>
             <td>{index}</td>
             <td>{vector.direction.toFixed(2)}&deg;</td>
             <td>{vector.magnitude.toFixed(2)}</td>
@@ -61,10 +61,9 @@
     border-radius: 50%;
   }
 
-  .ship {
+  .ship.dial {
     --thickness: 0.5em;
 
-    background-color: gold;
     position: absolute;
     width: 50%;
     height: var(--thickness);

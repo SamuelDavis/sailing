@@ -52,6 +52,9 @@ line.ship {
   stroke: darkgoldenrod;
 }
 
+.ship {
+  background-color: palegoldenrod;
+}
 .wind {
   background-color: var(--wind);
 }
