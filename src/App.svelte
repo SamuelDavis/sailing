@@ -5,6 +5,7 @@
   import RangeControl from "./RangeControl.svelte";
   import StackingContainer from "./StackingContainer.svelte";
   import { rudder, ship, water, wind } from "./store";
+  import StoreTable from "./StoreTable.svelte";
 
   let svg: SVGSVGElement;
 </script>
@@ -13,39 +14,31 @@
   <section>
     <h1>Controls</h1>
     <form on:submit|preventDefault>
-      <RangeControl class="wind" id="wind" label="Wind" vector={wind} />
-      <RangeControl class="water" id="water" label="Water" vector={water} />
-      <RangeControl class="rudder" id="rudder" label="Rudder" vector={rudder} />
+      <fieldset>
+        <legend>Direction</legend>
+        <div>
+          <RangeControl class="wind" id="wind" label="Wind" vector={wind} />
+          <RangeControl class="water" id="water" label="Water" vector={water} />
+          <RangeControl
+            class="rudder"
+            id="rudder"
+            label="Rudder"
+            vector={rudder}
+          />
+        </div>
+        <StackingContainer class="container">
+          <DialControl class="wind" vector={wind} />
+          <DialControl class="water" vector={water} scale={0.8} />
+          <DialControl class="rudder" vector={rudder} scale={0.6} />
+          <Needle vector={ship} />
+        </StackingContainer>
+      </fieldset>
     </form>
-
-    <StackingContainer class="container">
-      <DialControl class="wind" vector={wind} />
-      <DialControl class="water" vector={water} scale={0.8} />
-      <DialControl class="rudder" vector={rudder} scale={0.6} />
-      <Needle vector={ship} />
-    </StackingContainer>
   </section>
 
   <section>
     <h1>Output</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>index</th>
-          <th>direction</th>
-          <th>magnitude</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each Object.entries( { wind: $wind, water: $water, rudder: $rudder, ship: $ship } ) as [index, vector]}
-          <tr class={index}>
-            <td>{index}</td>
-            <td>{vector.direction.toFixed(2)}&deg;</td>
-            <td>{vector.magnitude.toFixed(2)}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+    <StoreTable />
   </section>
 
   <section style="height: 1000px;">hello</section>
@@ -64,5 +57,24 @@
 
   * :global(.container > *) {
     position: absolute;
+  }
+
+  section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    place-items: center;
+  }
+
+  form fieldset {
+    display: flex;
+    align-content: space-around;
+    gap: 1em;
+  }
+
+  form fieldset div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
 </style>

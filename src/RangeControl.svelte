@@ -20,3 +20,15 @@
     bind:value={$vector.direction}
   />
 </div>
+
+<style lang="css">
+  div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  label {
+    padding: 0.25em;
+    border-radius: 5px;
+  }
+</style>

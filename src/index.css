@@ -9,38 +9,6 @@
   box-sizing: border-box;
 }
 
-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1em;
-  place-items: center;
-}
-
-form {
-  display: grid;
-  gap: 0.25em;
-}
-
-form div {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-form label {
-  padding: 0.25em;
-  border-radius: 5px;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 0.5em;
-  border: 1px solid black;
-}
-
 .ship {
   background-color: var(--ship);
 }
