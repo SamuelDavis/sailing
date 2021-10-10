@@ -9,15 +9,27 @@
   box-sizing: border-box;
 }
 
-.ship {
+body {
+  margin: 0;
+}
+
+.ship,
+.ship * {
   background-color: var(--ship);
+  border-color: gold;
 }
-.wind {
+.wind,
+.wind * {
   background-color: var(--wind);
+  border-color: slategray;
 }
-.water {
+.water,
+.water * {
   background-color: var(--water);
+  border-color: blue;
 }
-.rudder {
+.rudder,
+.rudder * {
   background-color: var(--rudder);
+  border-color: brown;
 }

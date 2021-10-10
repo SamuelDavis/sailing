@@ -1,7 +1,6 @@
 <script lang="ts">
-  import type { Writable } from "svelte/store";
   import Needle from "./Needle.svelte";
-
+  import type { Writable } from "svelte/store";
   import type { Vector } from "./Vector";
 
   export let vector: Writable<Vector>;
@@ -52,7 +51,8 @@
     height: calc(100% * var(--scale));
 
     border-radius: 50%;
-    border: var(--border-width) solid;
+    border-width: var(--border-width);
+    border-style: solid;
   }
 
   * :global(hr) {
