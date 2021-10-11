@@ -42,7 +42,7 @@
 
 <style lang="css">
   :root {
-    --size: 25vw;
+    --size: 10em;
   }
 
   * :global(.container) {
@@ -84,5 +84,6 @@
     display: flex;
     gap: 4em;
     flex-basis: 50%;
+    align-items: center;
   }
 </style>
