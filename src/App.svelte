@@ -81,9 +81,11 @@
   }
 
   form {
+    flex-wrap: wrap;
     display: flex;
     gap: 4em;
     flex-basis: 50%;
     align-items: center;
+    justify-content: center;
   }
 </style>
