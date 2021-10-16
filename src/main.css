@@ -1,0 +1,35 @@
+:root {
+  --wind-primary: #e9ebed;
+  --water-primary: #0496ff;
+  --sails-primary: #dfdfcd;
+  --rudder-primary: #96705b;
+  --ship-primary: #f3b700;
+}
+
+.wind {
+  background-color: var(--wind-primary);
+}
+.water {
+  background-color: var(--water-primary);
+}
+.sails {
+  background-color: var(--sails-primary);
+}
+.rudder {
+  background-color: var(--rudder-primary);
+}
+.ship {
+  background-color: var(--ship-primary);
+}
+
+.no-select {
+  user-select: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}

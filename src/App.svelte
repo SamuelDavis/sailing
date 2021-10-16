@@ -1,91 +1,68 @@
 <script lang="ts">
-  import DialControl from "./DialControl.svelte";
-  import Needle from "./Needle.svelte";
+  import { derived, writable } from "svelte/store";
+  import ControlRow from "./ControlRow.svelte";
+  import { deriveHypotenuse, MAX_MAGNITUDE, Vector } from "./Util";
 
-  import StackingContainer from "./StackingContainer.svelte";
-  import { rudder, ship, water, wind } from "./store";
-  import TableRow from "./TableRow.svelte";
+  const wind = writable(new Vector(0, 1));
+  const water = writable(new Vector(0, 1));
+  const sails = writable(new Vector(0, 1));
+  const rudder = writable(new Vector(0, 1));
+  const sources = [wind, water, sails, rudder];
+  const ship = derived(sources, (vectors) => {
+    let x = 0;
+    let y = 0;
+    for (const vector of vectors) {
+      x += Math.cos(vector.direction) * vector.magnitude;
+      y += Math.sin(vector.direction) * vector.magnitude;
+    }
+    const d = Math.atan2(y, x);
+    const m = deriveHypotenuse(x, y);
+
+    return new Vector(d, m);
+  });
 </script>
 
 <main>
-  <section>
-    <form on:submit|preventDefault>
-      <StackingContainer class="container">
-        <DialControl class="wind" vector={wind} />
-        <DialControl class="water" vector={water} scale={0.7} />
-        <DialControl class="rudder" vector={rudder} scale={0.4} />
-        <Needle class="ship" vector={ship} />
-      </StackingContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>index</th>
-            <th>direction</th>
-            <th>magnitude</th>
-          </tr>
-        </thead>
-        <tbody>
-          <TableRow vector={wind} class="wind" label="Wind" />
-          <TableRow vector={water} class="water" label="Water" />
-          <TableRow vector={rudder} class="rudder" label="Rudder" />
-          <TableRow
-            vector={ship}
-            class="ship"
-            label="Ship"
-            interactive={false}
-          />
-        </tbody>
-      </table>
-    </form>
-  </section>
+  <form>
+    <table>
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Direction</th>
+          <th>Magnitude</th>
+          <th>Facing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ControlRow class="wind" vector={wind} label="Wind" />
+        <ControlRow class="water" vector={water} label="Water" />
+        <ControlRow class="sails" vector={sails} label="Sails" />
+        <ControlRow class="rudder" vector={rudder} label="Rudder" />
+        <ControlRow
+          class="ship"
+          vector={ship}
+          maxMagnitude={MAX_MAGNITUDE * sources.length}
+          label="Ship"
+        />
+      </tbody>
+    </table>
+  </form>
 </main>
 
 <style lang="css">
-  :root {
-    --size: 10em;
-  }
-
-  * :global(.container) {
-    width: var(--size);
-    height: var(--size);
-    background-color: gray;
-    border-radius: 50%;
-  }
-
-  * :global(.container > *) {
-    position: absolute;
-  }
-
-  main {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    place-items: center;
-  }
-
-  section {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1em;
-    place-items: center;
-  }
-
   table {
     border-collapse: collapse;
   }
-
-  * :global(th),
-  * :global(td) {
-    padding: 0.5em;
+  :global(th),
+  :global(td) {
     border: 1px solid black;
+    padding: 0.5em;
   }
 
-  form {
-    flex-wrap: wrap;
-    display: flex;
-    gap: 4em;
-    flex-basis: 50%;
-    align-items: center;
-    justify-content: center;
+  main {
+    display: grid;
+    place-content: center;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

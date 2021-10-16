@@ -1,27 +1,28 @@
-import { Vector } from "./Vector";
+import type { Readable, Writable } from "svelte/store";
 
-export const ROTATION_LIMIT = Math.PI;
+export const MAX_DIRECTION = Math.PI;
+export const MAX_MAGNITUDE = 10;
 
-export function deriveVectorComponents(vector: Vector): [number, number] {
-  return [
-    Math.cos(vector.direction) * vector.magnitude,
-    Math.sin(vector.direction) * vector.magnitude,
-  ];
+export class Vector {
+  constructor(public direction: number = 0, public magnitude: number = 0) {}
 }
 
-export function addVectors(...vectors: Vector[]): Vector {
-  let x = 0;
-  let y = 0;
-  for (const vector of vectors) {
-    const [vx, vy] = deriveVectorComponents(vector);
-    x += vx;
-    y += vy;
-  }
-  const m = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-
-  return new Vector(Math.atan2(y, x), m);
+export function deriveHypotenuse(x: number, y: number): number {
+  return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
 
-export function radiansToDegrees(radians: number): number {
+export function deriveDegreesFromRadians(radians: number): number {
   return (radians * 180) / Math.PI;
+}
+
+export function toCssVars(vars: { [key: string]: string | number }): string {
+  return Object.entries(vars)
+    .map(([key, val]) => `--${key}:${val};`)
+    .join("");
+}
+
+export function isWritable<T>(
+  store: Readable<T> | Writable<T>
+): store is Writable<T> {
+  return "set" in store && "update" in store;
 }
