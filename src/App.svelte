@@ -56,7 +56,7 @@
   :global(th),
   :global(td) {
     border: 1px solid black;
-    padding: 0.5em;
+    padding: minmax(1vw, 1vh);
   }
 
   main {

@@ -35,7 +35,9 @@
   </td>
   <td>
     <label>
-      {$vector.magnitude.toFixed(2)} / {maxMagnitude}
+      <span>
+        {$vector.magnitude.toFixed(2)} / {maxMagnitude}
+      </span>
       <input
         type="range"
         min={0}
@@ -56,7 +58,12 @@
     text-align: center;
   }
   td label {
-    display: grid;
-    grid-template-columns: minmax(18ch, auto) 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  td label span:first-child {
+    min-width: 18ch;
   }
 </style>
